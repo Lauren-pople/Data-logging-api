@@ -15,133 +15,129 @@
    
 
 <!-- <section>-->
-  <div id ="slider">
+  <div id ="slider"> <!--creating slider -->
     <h1>How I slept</h1>
 
     <p><label for="happiness">How did i sleep on a scale from 1-10?</label> <br>
-    <input type="range" id="happiness" min="1" max="10" value="5" oninput="sliderChange(this.value)">
+    <input type="range" id="happiness" min="1" max="10" value="5" oninput="sliderChange(this.value)"> <!-- sets value from 1 to 10 on slider-->
     <output id="sliderVal"> </output> <br>
-    <button id="submit">submit</button>
+    <button id="submit">submit</button> <!--creates submit button -->
           </p>
    
     <p>
-      <div class="canvasContainer">
+      <div class="canvasContainer"><!-- container to center chart-->
 
-    <canvas id="chart" ></canvas>
+    <canvas id="chart" ></canvas> <!-- creating chart -->
   </div>
   </p>
 
     <script>
 
 
-      let xVals = [];
-      let yVals = [];
+      let xVals = []; //defining gobal variables for xaxes 
+      let yVals = []; //defining gobal variables for yaxes 
 
 
       function sliderChange(val) {
-          document.getElementById('sliderVal').innerHTML = val;
+          document.getElementById('sliderVal').innerHTML = val; // gets data from slider's input
       }
 
-      const buttonSubmit = document.getElementById('submit');
+      const buttonSubmit = document.getElementById('submit'); // submits data into database
       
       buttonSubmit.addEventListener('click', async event => {
-        const sleep = document.getElementById('happiness').value;
+        const sleep = document.getElementById('happiness').value; // when submit button is clcked sleep data display as happiness 
 
-        const data = {sleep};
+        const data = {sleep}; // data is sleep
         const options = {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json' // post data from json
           },
           body: JSON.stringify(data)
         };
-        const response = await fetch('/api', options);
+        const response = await fetch('/api', options); // await fetch api
         const json = await response.json();
-        console.log(json);
+        console.log(json); // await response.json and display in console.log
 
-        chartIt();
+        chartIt(); // calls chartIt function to make it visable
       
       });
 
 
-  chartIt();
+  chartIt(); //
 
-async function chartIt() {
+async function chartIt() { // function creates chart
     const response = await fetch('/api');
-    const data = await response.json();
+    const data = await response.json(); // uses api to draw a chart
 
 
   console.log(data);
 
     let day = 86400000; //ms in a day
-    let begin= 1571270400000;
-    let end = begin + day;
-    let dayNumber = 1;
-    let j = 0;
+    let begin= 1571270400000; //begin is 17/10/2019
+    let end = begin + day; // 17/10/2019 + 86400000 in a day
+    let dayNumber = 1; // value is 1
+    let j = 0; // new local variable, value is 0, allows data to select first data
 
-    for (let i = 0; i < data.length; i++){
-     // console.log (data[i].timestamp + "  " +new Date(data[i].timestamp).toLocaleString());
-      //console.log (end + " end " + new Date(end).toLocaleString());
-      //console.log (end - data[i].timestamp );
-      
-      if (data[i].timestamp > begin && data[i].timestamp < end ){
-       // console.log(data[i].timestamp + " day" + dayNumber);
-        begin += day;
-        end += day;
-        xVals[j] = new Date(data[i].timestamp).toLocaleString();
-       // console.log(xVals[j]);
-        yVals[j] = data[i].sleep;
-       // console.log("y",yVals[j]); 
-       // console.log ( new Date(data[i].timestamp).toLocaleString( ) + " day " + dayNumber);
-        dayNumber ++;
-        j++;
+    for (let i = 0; i < data.length; i++){ // 
+   
+      if (data[i].timestamp > begin && data[i].timestamp < end ){ // timestamp starts if more that begin & less than newest day
+ 
+        begin += day; 
+        end += day; // keeps adding one day to last day
+        xVals[j] = new Date(data[i].timestamp).toLocaleString(); //display timestamp on xaxes
+       
+        yVals[j] = data[i].sleep; // display sleep value on yaxes
+       
+        dayNumber ++; // keep adding to 1
+        j++; // keep adding to 0
       }
-    //  console.log(xVals);
+    
     }
     
     const ctx = document.getElementById('chart').getContext('2d');
     const myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'bar', // chart type
     data: {
-        labels: xVals,
+        labels: xVals, // timestamp displayed in date, time: hour, minute, sec
         datasets: [{
-            label: 'sleep over time',
-            data: yVals,
+            label: 'sleep over time', // sleep over time
+            data: yVals, // data input by slider (sleep data) displayed
             fill: false,
-            backgroundColor: 'rgba(38, 12, 12)',
-            borderColor: 'rgba(255, 255, 255)',
-            borderWidth: 1}]
+            backgroundColor: 'rgba(38, 12, 12)',//bar colour
+            borderColor: 'rgba(255, 255, 255)', // bar outline
+            borderWidth: 1}] //outline width
               },
-            options: {  
+            options: {  //
               legend: {
-                display: false,
+                display: false, // removes label
               },
               tooltips:{
-                enabled:true,
-                backgroundColor:'#000000',
+                enabled:true, // hover over bar to display data (date and sleep value)
+                backgroundColor:'#000000', // black
               },
                 scales: {
-                    xAxes: [{
+                    xAxes: [{ // bottom axes
                          gridLines: {
-                           drawBorder: true,
+                           drawBorder: true, // removes gridlines
                             display: false,
 
                          },
                          ticks: {
-                            display: false,
+                            display: false, // removes dates at bottom of xaxes
                           }
 
                     }],
-                      yAxes: [{
+                      yAxes: [{ // left axes
                          gridLines: {
-                            display: false,
+                            display: false, // removes gridlines
 
                          },
                          
                     }],
                      ticks: {
-                    fontSize: 15,
-                    fontColor: 'lightgrey',
+                    fontSize: 15, // data is diplayed in light grey
+                    fontColor: 'lightgrey', 
                     
                   }
 

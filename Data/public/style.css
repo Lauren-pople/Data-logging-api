@@ -20,7 +20,7 @@ https://mkrtchyan.ga
   padding:0px;
   margin: 0px;
   font-family: Arial, Helventica, sans-serif;
-  background-image:url("skyg.gif");
+  background-image:url("skyg.gif");/* sets gif as background image */
 
 
 }
@@ -38,7 +38,7 @@ https://mkrtchyan.ga
   left:50%;
   transform: translate(-50%,-50%);
   border-radius:20px;
-  mix-blend-mode:screen;
+  mix-blend-mode:screen; /* text is white, central with a font size of 4vw */
 
 }
 
@@ -48,44 +48,41 @@ h1{
  	font-size: 90px;
  	-webkit-text-stroke: 1px rgba(255, 255, 255);
 	-webkit-text-fill-color: rgba(0, 0, 0);
-	text-align: center;
+	text-align: center; /* header 1 is in white, 1 pixel stroke with black fill */
 }
 
 
 .canvasContainer{
     width: 70%;
-    height: 150px;
-    margin: 0 auto;
-    position:center;
-    position: relative;
+    height: 150px; /* full size screen*/
+    margin: 0 auto; /* auto margin*/
+    position:center; /* central position */
+    position: relative; /* position is relative to screen size*/
 }
 
 #label{
-  color: rgba(255, 255, 255);
+  color: rgba(255, 255, 255); /* sentence colour*/
 }
 
 #chart{	
 	
-   width: 60%;
-   height: 120px;
-   position:center;
-   position: relative;
+   width: 60%; /* width 60% od screen*/
+   height: 120px; /* height 120px*/
+   position:center; /*position central */
+   position: relative; /* position is relative to screen size*/
   
    margin: 0 auto;
 }
 
 
 #slider{
-	position: relative ;
-	position: right;
+	position: relative ; /* position is relative to screen size*/
+	position: center; /* centers slider*/
     z-index: 999;
     color: rgba(255,255,255);
-    margin: auto;
+    margin: auto; /* auto margin*/
     padding-top: 5.01px;
-    align-content: right;
-    justify-content:right;
-    text-align:center;
+    align-content: center; /* centers slider*/
+    justify-content:center; /* centers slider*/
+    text-align:center; /* centers text*/
 }
-
-
-
